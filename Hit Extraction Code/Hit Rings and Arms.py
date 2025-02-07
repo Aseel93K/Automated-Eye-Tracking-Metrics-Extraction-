@@ -25,9 +25,13 @@ for image in json_data:
 
     for item in image["data"]:
         class_label = item["class_label"]
+        precision = item.get("predict_accuracy", 1.0)
+        if precision < 0.5:
+                continue
+                
         for polygon_points in item["points"]:
-            # Check if there are at least 3 coordinates in the "points" data
-            if len(polygon_points) >= 3:
+            # Check if there are at least 4 coordinates in the "points" data
+            if len(polygon_points) >= 4:
                 # Create a Shapely Polygon from the points
                 polygon = Polygon(polygon_points)
 
